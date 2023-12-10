@@ -1,0 +1,19 @@
+name: Take a snapshot of YCM
+
+on:
+  workflow_dispatch:
+
+jobs:
+  take_snapshot:
+    name: take snapshot
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone
+        run: git clone --depth 1 --recurse-submodules --shallow-submodules https://github.com/Valloric/YouCompleteMe
+      - name: pack
+        run: tar czf YouCompleteMe.tar.gz YouCompleteMe/
+      - name: push
+        uses: actions/upload-artifact@v3
+        with:
+          name: code
+          path: YouCompleteMe.tar.gz
